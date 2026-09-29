@@ -55,11 +55,9 @@ a{color:inherit}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;font:500 13px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;text-align:center;transition:transform .18s var(--ease),background-color .25s,color .25s}
 .btn:active{transform:scale(.97)}
 .btn-solid{background:var(--accent);color:var(--accent-ink)}
-.btn-solid:hover{background:#4a1928}
+@media (hover:hover){.btn-solid:hover{background:#4a1928}.btn-light:hover{background:#fff}.btn-line:hover{background:var(--ink);color:var(--bg)}}
 .btn-light{background:var(--bg);color:var(--ink)}
-.btn-light:hover{background:#fff}
 .btn-line{border:1px solid var(--ink);color:var(--ink)}
-.btn-line:hover{background:var(--ink);color:var(--bg)}
 .btn-block{width:100%}
 .btn .arrow{transition:transform .25s var(--ease)}
 .btn:hover .arrow{transform:translateX(4px)}
@@ -260,6 +258,8 @@ footer small{color:var(--ink-soft)}
 .done{padding:36px var(--gutter) 8px;display:grid;gap:16px}
 .done .tick{width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;animation:pop .5s var(--ease)}
 @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+.notice{margin:0;background:var(--bg-2);border-radius:6px;padding:12px 14px;font:500 14px/1.45 var(--sans);color:var(--ink)}
+.btn-small{min-height:44px;font-size:12px}
 .msg{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px;font:400 14px/1.5 var(--sans);margin:0;user-select:all}
 .fine{font-size:13px;color:var(--ink-soft);margin:0}
 .phone{font:500 20px/1 var(--sans);letter-spacing:.04em;user-select:all}
@@ -524,32 +524,20 @@ footer small{color:var(--ink-soft)}
         <input id="rsSize" type="text" placeholder="e.g. Small, or Medium top / Large bottom">
       </div>
       <p class="fine" id="rsError" role="alert" style="color:var(--promo)" hidden></p>
-      <p class="fine">Dream Rental confirms availability with you personally. Nothing is charged here.</p>
+      <p class="fine">Your details open in Dream Rental Messenger, and we confirm availability with you there. Nothing is charged here.</p>
     </form>
     <div class="done" id="rsDone" hidden>
-      <div id="rsSent" hidden style="display:grid;gap:14px">
-        <div class="tick" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-        <h3 class="h-section" style="font-size:28px">Reservation request received. <em>We’ll contact you to confirm availability.</em></h3>
-      </div>
-      <div id="rsSend" style="display:grid;gap:10px">
-        <p class="eyebrow">Last step</p>
-        <h3 class="h-section" style="font-size:30px">Send your <em>request</em></h3>
-        <p class="fine">Text or message this to Dream Rental so we receive it.</p>
-      </div>
+      <div class="tick" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h3 class="h-section" style="font-size:30px">Send it to us <em>in Messenger</em></h3>
+      <p class="notice" id="rsNotice" role="status"></p>
       <pre class="msg" id="rsMsg"></pre>
       <div style="display:grid;gap:10px">
-        <button class="btn btn-solid btn-block" id="rsCopy" type="button">Copy message</button>
-        <a class="btn btn-line btn-block" id="rsSms">Text it to Dream Rental</a>
-        <a class="btn btn-line btn-block" id="rsForm2" target="_blank" rel="noopener" hidden>Or use the booking form</a>
-      </div>
-      <div style="display:grid;gap:6px;padding-top:6px">
-        <span class="eyebrow">Call or text</span>
-        <span class="phone" id="rsPhone"></span>
-        <span class="fine" id="rsFb"></span>
+        <a class="btn btn-solid btn-block" id="rsMessenger" href="#" rel="noopener">Message Dream Rental</a>
+        <button class="btn btn-line btn-block btn-small" id="rsCopy" type="button">Copy reservation details</button>
       </div>
     </div>
   </div>
-  <div class="sheet-foot" id="rsFoot"><button class="btn btn-solid btn-block" type="submit" form="rsForm">Continue</button></div>
+  <div class="sheet-foot" id="rsFoot"><button class="btn btn-solid btn-block" type="submit" form="rsForm">Message Dream Rental</button></div>
 </div>
 
 <!-- ============ LIGHTBOX ============ -->
@@ -572,6 +560,7 @@ const CONFIG = {
   saleStarts: "2026-09-29T00:00:00+08:00",
   salePercent: 50,                           // promo price = regular price × 0.50
   saleCats: ["evening","cocktail","floral","tops"], // categories included in the promo
+  messengerUrl: "https://m.me/100071015381105", // Dream Rental Facebook Page in Messenger
   phone: "09912091390",
   facebook: "Dream Rental",                  // page name as shown on Facebook
   facebookUrl: "",                           // e.g. "https://www.facebook.com/yourpage"
@@ -820,18 +809,36 @@ function submitReserve(e){
   const size = $("#rsSize").value.trim();
   const msg = `Hi Dream Rental! I'd like to reserve this outfit.\n\nOutfit: ${it.name} (${kind(it)})\nFits: ${it.size}\nEvent date: ${nice}\n${it.price == null ? "Price: please confirm" : onSale(it) ? `Promo price: ${peso(promo(it))} (${offLabel()}, regular ${peso(it.price)})` : "Price: " + peso(it.price)}${size?"\nMy size: "+size:""}\nName: ${name}\n\nIs it available for my date?`;
   $("#rsMsg").textContent = msg;
-  $("#rsSms").href = `sms:${CONFIG.phone}?&body=${encodeURIComponent(msg)}`;
-  const f = $("#rsForm2"); f.hidden = !it.form; if (it.form) f.href = it.form;
-  $("#rsPhone").textContent = fmtPhone(CONFIG.phone);
-  $("#rsFb").innerHTML = "Facebook: " + (CONFIG.facebookUrl ? `<a href="${esc(CONFIG.facebookUrl)}" target="_blank" rel="noopener">${esc(CONFIG.facebook)}</a>` : esc(CONFIG.facebook));
   $("#rsForm").hidden = true; $("#rsFoot").hidden = true; $("#rsDone").hidden = false;
-  $("#rsSent").hidden = true; $("#rsSend").hidden = false;
   $("#rs .sheet-scroll").scrollTop = 0;
+  sendToMessenger(msg);
 }
-// Shown once the customer has sent (or copied) the request to Dream Rental
-function markSent(){
-  $("#rsSend").hidden = true; $("#rsSent").hidden = false;
-  $("#rs .sheet-scroll").scrollTo({top:0, behavior: reduce ? "auto" : "smooth"});
+
+/* ---------- Messenger hand-off ----------
+   A plain m.me link can't reliably pre-fill a long message, so the details are
+   copied to the clipboard first, then Dream Rental's Messenger chat opens.
+   Phones: same-tab navigation, so the m.me link can hand off to the Messenger app.
+   Desktop: new tab, so the site stays open behind it. */
+const isPhone = () => matchMedia("(pointer: coarse)").matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+function copyText(text){
+  try { return navigator.clipboard.writeText(text).then(()=>true, ()=>false); } catch(_) { return Promise.resolve(false); }
+}
+function showCopied(ok){
+  $("#rsNotice").textContent = ok
+    ? "Your reservation details have been copied. Paste the message in Messenger and send it to us."
+    : "Copy the message below, then paste it in Messenger and send it to us.";
+  if (!ok){ const r=document.createRange(); r.selectNodeContents($("#rsMsg")); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+}
+function sendToMessenger(msg){
+  const copied = copyText(msg);           // started inside the tap, so the browser allows it
+  $("#rsNotice").textContent = "Copying your reservation details…";
+  if (isPhone()){
+    copied.then(ok => { showCopied(ok); setTimeout(()=>{ location.href = CONFIG.messengerUrl; }, ok ? 1400 : 2600); });
+  } else {
+    const w = window.open(CONFIG.messengerUrl, "_blank", "noopener");
+    copied.then(showCopied);
+    if (!w) $("#rsMessenger").focus();    // pop-up blocked: the button below opens it
+  }
 }
 
 /* ---------- lightbox ---------- */
@@ -892,13 +899,12 @@ $("#qvReserve").addEventListener("click", ()=>openReserve(current.id));
 $("#rsItem").addEventListener("change", syncPicked);
 $("#rsForm").addEventListener("submit", submitReserve);
 $("#rsCopy").addEventListener("click", ()=>{
-  const text = $("#rsMsg").textContent;
-  const fallback = ()=>{ const r=document.createRange(); r.selectNodeContents($("#rsMsg")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast("Message selected. Copy it from your menu."); };
-  try { navigator.clipboard.writeText(text).then(()=>toast("Message copied. Paste it in our chat or text."), fallback); } catch(_){ fallback(); }
-  markSent();
+  copyText($("#rsMsg").textContent).then(ok => { showCopied(ok); if (ok) toast("Reservation details copied"); });
 });
-$("#rsSms").addEventListener("click", ()=>setTimeout(markSent, 400));
-$("#rsForm2").addEventListener("click", ()=>setTimeout(markSent, 400));
+$("#rsMessenger").addEventListener("click", e=>{
+  e.preventDefault();
+  sendToMessenger($("#rsMsg").textContent);
+});
 $("#lbClose").addEventListener("click", closeLightbox);
 $("#lb").addEventListener("click", e=>{ if (e.target.id==="lb") closeLightbox(); });
 document.addEventListener("keydown", e=>{
