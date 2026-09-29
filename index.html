@@ -259,7 +259,7 @@ footer small{color:var(--ink-soft)}
 .done .tick{width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;animation:pop .5s var(--ease)}
 @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
 .notice{margin:0;background:var(--bg-2);border-radius:6px;padding:12px 14px;font:500 14px/1.45 var(--sans);color:var(--ink)}
-.btn-small{min-height:44px;font-size:12px}
+.link-btn{justify-self:center;min-height:44px;padding:0 12px;font:500 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);text-decoration:underline;text-underline-offset:4px}
 .msg{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px;font:400 14px/1.5 var(--sans);margin:0;user-select:all}
 .fine{font-size:13px;color:var(--ink-soft);margin:0}
 .phone{font:500 20px/1 var(--sans);letter-spacing:.04em;user-select:all}
@@ -524,20 +524,19 @@ footer small{color:var(--ink-soft)}
         <input id="rsSize" type="text" placeholder="e.g. Small, or Medium top / Large bottom">
       </div>
       <p class="fine" id="rsError" role="alert" style="color:var(--promo)" hidden></p>
-      <p class="fine">Your details open in Dream Rental Messenger, and we confirm availability with you there. Nothing is charged here.</p>
+      <p class="fine">Next, send your details to Dream Rental by Messenger or text, and we confirm availability with you. Nothing is charged here.</p>
     </form>
     <div class="done" id="rsDone" hidden>
-      <div class="tick" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-      <h3 class="h-section" style="font-size:30px">Send it to us <em>in Messenger</em></h3>
-      <p class="notice" id="rsNotice" role="status"></p>
-      <pre class="msg" id="rsMsg"></pre>
+      <h3 class="h-section" style="font-size:30px">Send your <em>request</em></h3>
+      <p class="notice" id="rsNotice" role="status" hidden></p>
       <div style="display:grid;gap:10px">
-        <a class="btn btn-solid btn-block" id="rsMessenger" href="#" rel="noopener">Message Dream Rental</a>
-        <button class="btn btn-line btn-block btn-small" id="rsCopy" type="button">Copy reservation details</button>
+        <a class="btn btn-solid btn-block" id="rsMessenger" href="https://m.me/100071015381105" rel="noopener">Message Dream Rental</a>
+        <a class="btn btn-line btn-block" id="rsSms" href="sms:09912091390">Text Dream Rental</a>
+        <button class="link-btn" id="rsCopy" type="button">Copy reservation details</button>
       </div>
     </div>
   </div>
-  <div class="sheet-foot" id="rsFoot"><button class="btn btn-solid btn-block" type="submit" form="rsForm">Message Dream Rental</button></div>
+  <div class="sheet-foot" id="rsFoot"><button class="btn btn-solid btn-block" type="submit" form="rsForm">Continue</button></div>
 </div>
 
 <!-- ============ LIGHTBOX ============ -->
@@ -576,26 +575,26 @@ const CATEGORIES = [
 ];
 
 const ITEMS = [
-  {"id": "look-01", "name": "Look 01", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-01.jpg", "form": "https://forms.gle/6SmYT84GgxXq9f9x8"},
-  {"id": "look-02", "name": "Look 02", "cat": "evening", "size": "Small to Large", "price": 1000, "img": "/photos/look-02.jpg", "form": "https://forms.gle/HTAQtQ1nRRwoCtUeA"},
-  {"id": "look-03", "name": "Look 03", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-03.jpg", "form": "https://forms.gle/rz53TJs2HMY4uKV16"},
-  {"id": "look-04", "name": "Look 04", "cat": "evening", "size": "Medium to Large", "price": null, "img": "/photos/look-04.jpg", "form": "https://forms.gle/CRmJEZyTzhp7twFX8"},
-  {"id": "look-05", "name": "Look 05", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-05.jpg", "form": "https://forms.gle/79bVfBcUTi7P73bT6"},
+  {"id": "look-01", "name": "Look 01", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-01.jpg"},
+  {"id": "look-02", "name": "Look 02", "cat": "evening", "size": "Small to Large", "price": 1000, "img": "/photos/look-02.jpg"},
+  {"id": "look-03", "name": "Look 03", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-03.jpg"},
+  {"id": "look-04", "name": "Look 04", "cat": "evening", "size": "Medium to Large", "price": null, "img": "/photos/look-04.jpg"},
+  {"id": "look-05", "name": "Look 05", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-05.jpg"},
   {"id": "look-06", "name": "Look 06", "cat": "cocktail", "size": "Small to Large", "price": 550, "img": "/photos/look-06.jpg"},
-  {"id": "look-07", "name": "Look 07", "cat": "evening", "size": "Small to Large", "price": 780, "img": "/photos/look-07.jpg", "form": "https://forms.gle/dnSdgHGYuaxAxmjN8"},
+  {"id": "look-07", "name": "Look 07", "cat": "evening", "size": "Small to Large", "price": 780, "img": "/photos/look-07.jpg"},
   {"id": "look-08", "name": "Look 08", "cat": "evening", "size": "Small to Large", "price": 700, "img": "/photos/look-08.jpg"},
-  {"id": "look-09", "name": "Look 09", "cat": "cocktail", "size": "Small to Large", "price": 700, "img": "/photos/look-09.jpg", "form": "https://forms.gle/jZzGYyCVFxoLmfVg7"},
-  {"id": "look-10", "name": "Look 10", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-10.jpg", "form": "https://forms.gle/GhzDXmn3yKsBepEf8"},
-  {"id": "look-11", "name": "Look 11", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-11.jpg", "form": "https://forms.gle/GhzDXmn3yKsBepEf8"},
-  {"id": "look-12", "name": "Look 12", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-12.jpg", "form": "https://forms.gle/GhzDXmn3yKsBepEf8"},
-  {"id": "look-13", "name": "Look 13", "cat": "cocktail", "size": "Small to Medium or XS to Medium", "price": null, "img": "/photos/look-13.jpg", "form": "https://forms.gle/dNeFQPMciUZERQqAA"},
-  {"id": "look-14", "name": "Look 14", "cat": "floral", "size": "XS to Medium", "price": 700, "img": "/photos/look-14.jpg", "form": "https://forms.gle/ncFaUFbEG7t6Kpro9"},
-  {"id": "look-15", "name": "Look 15", "cat": "floral", "size": "XS to Medium", "price": 650, "img": "/photos/look-15.jpg", "form": "https://forms.gle/Ks6AcPDCEADACC2V8"},
-  {"id": "look-16", "name": "Look 16", "cat": "floral", "size": "Small to Medium or Medium to Large", "price": null, "img": "/photos/look-16.jpg", "form": "https://forms.gle/J3jp3Auo84z7he6B7"},
+  {"id": "look-09", "name": "Look 09", "cat": "cocktail", "size": "Small to Large", "price": 700, "img": "/photos/look-09.jpg"},
+  {"id": "look-10", "name": "Look 10", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-10.jpg"},
+  {"id": "look-11", "name": "Look 11", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-11.jpg"},
+  {"id": "look-12", "name": "Look 12", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-12.jpg"},
+  {"id": "look-13", "name": "Look 13", "cat": "cocktail", "size": "Small to Medium or XS to Medium", "price": null, "img": "/photos/look-13.jpg"},
+  {"id": "look-14", "name": "Look 14", "cat": "floral", "size": "XS to Medium", "price": 700, "img": "/photos/look-14.jpg"},
+  {"id": "look-15", "name": "Look 15", "cat": "floral", "size": "XS to Medium", "price": 650, "img": "/photos/look-15.jpg"},
+  {"id": "look-16", "name": "Look 16", "cat": "floral", "size": "Small to Medium or Medium to Large", "price": null, "img": "/photos/look-16.jpg"},
   {"id": "look-17", "name": "Look 17", "cat": "floral", "size": "Small to Medium or XS to Medium", "price": null, "img": "/photos/look-17.jpg"},
-  {"id": "look-18", "name": "Look 18", "cat": "floral", "size": "XS to Medium", "price": 600, "img": "/photos/look-18.jpg", "form": "https://forms.gle/PgfbstbbPmzCvF4U6"},
-  {"id": "look-19", "name": "Look 19", "cat": "floral", "size": "XS to Medium", "price": 800, "img": "/photos/look-19.jpg", "note": "Black color available", "form": "https://forms.gle/g53QxDSXu8CrG7UK6"},
-  {"id": "look-20", "name": "Look 20", "cat": "cocktail", "size": "Small to Medium", "price": null, "img": "/photos/look-20.jpg", "form": "https://forms.gle/1jDbF69GLzHvvx3e6"},
+  {"id": "look-18", "name": "Look 18", "cat": "floral", "size": "XS to Medium", "price": 600, "img": "/photos/look-18.jpg"},
+  {"id": "look-19", "name": "Look 19", "cat": "floral", "size": "XS to Medium", "price": 800, "img": "/photos/look-19.jpg", "note": "Black color available"},
+  {"id": "look-20", "name": "Look 20", "cat": "cocktail", "size": "Small to Medium", "price": null, "img": "/photos/look-20.jpg"},
   {"id": "look-21", "name": "Look 21", "cat": "cocktail", "size": "Small to Medium", "price": 550, "img": "/photos/look-21.jpg"},
   {"id": "look-22", "name": "Look 22", "cat": "tops", "size": "XS to Medium", "price": 399, "img": "/photos/look-22.jpg"},
   {"id": "look-23", "name": "Look 23", "cat": "cocktail", "size": "Medium to Large", "price": 700, "img": "/photos/look-23.jpg"},
@@ -615,7 +614,7 @@ const ITEMS = [
   {"id": "look-37", "name": "Look 37", "cat": "evening", "size": "Medium to Large", "price": 450, "img": "/photos/look-37.jpg"},
   {"id": "look-38", "name": "Look 38", "cat": "evening", "size": "Small to Medium", "price": 400, "img": "/photos/look-38.jpg"},
   {"id": "look-39", "name": "Look 39", "cat": "floral", "size": "XS to Medium", "price": 200, "img": "/photos/look-39.jpg"},
-  {"id": "look-40", "name": "Look 40", "cat": "cocktail", "size": "XS to Medium", "price": 450, "img": "/photos/look-40.jpg", "form": "https://forms.gle/VkNB2xkZyKpUkvSR8"},
+  {"id": "look-40", "name": "Look 40", "cat": "cocktail", "size": "XS to Medium", "price": 450, "img": "/photos/look-40.jpg"},
   {"id": "look-41", "name": "Look 41", "cat": "cocktail", "size": "XS to Medium", "price": 280, "img": "/photos/look-41.jpg"},
   {"id": "look-42", "name": "Look 42", "cat": "cocktail", "size": "Small to Medium", "price": 180, "img": "/photos/look-42.jpg"},
   {"id": "look-43", "name": "Look 43", "cat": "evening", "size": "Small to Medium", "price": 380, "img": "/photos/look-43.jpg"},
@@ -808,37 +807,45 @@ function submitReserve(e){
   const nice = new Date(date+"T00:00:00").toLocaleDateString("en-PH",{weekday:"short",month:"long",day:"numeric",year:"numeric"});
   const size = $("#rsSize").value.trim();
   const msg = `Hi Dream Rental! I'd like to reserve this outfit.\n\nOutfit: ${it.name} (${kind(it)})\nFits: ${it.size}\nEvent date: ${nice}\n${it.price == null ? "Price: please confirm" : onSale(it) ? `Promo price: ${peso(promo(it))} (${offLabel()}, regular ${peso(it.price)})` : "Price: " + peso(it.price)}${size?"\nMy size: "+size:""}\nName: ${name}\n\nIs it available for my date?`;
-  $("#rsMsg").textContent = msg;
+  reservationMsg = msg;
+  $("#rsSms").href = smsHref(msg);
+  $("#rsNotice").hidden = true;
   $("#rsForm").hidden = true; $("#rsFoot").hidden = true; $("#rsDone").hidden = false;
   $("#rs .sheet-scroll").scrollTop = 0;
-  sendToMessenger(msg);
 }
 
-/* ---------- Messenger hand-off ----------
-   A plain m.me link can't reliably pre-fill a long message, so the details are
-   copied to the clipboard first, then Dream Rental's Messenger chat opens.
-   Phones: same-tab navigation, so the m.me link can hand off to the Messenger app.
-   Desktop: new tab, so the site stays open behind it. */
+/* ---------- Send the request: Messenger or SMS ----------
+   Both buttons copy the reservation message first, then open the app.
+   Messenger (m.me) can't reliably pre-fill a long message, so the customer pastes it.
+   SMS pre-fills the message body where the phone supports it (the copy is a backup). */
+let reservationMsg = "";
 const isPhone = () => matchMedia("(pointer: coarse)").matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+const smsHref = msg => `sms:${CONFIG.phone}?&body=${encodeURIComponent(msg)}`;
 function copyText(text){
   try { return navigator.clipboard.writeText(text).then(()=>true, ()=>false); } catch(_) { return Promise.resolve(false); }
 }
-function showCopied(ok){
-  $("#rsNotice").textContent = ok
-    ? "Your reservation details have been copied. Paste the message in Messenger and send it to us."
-    : "Copy the message below, then paste it in Messenger and send it to us.";
-  if (!ok){ const r=document.createRange(); r.selectNodeContents($("#rsMsg")); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); }
-}
-function sendToMessenger(msg){
-  const copied = copyText(msg);           // started inside the tap, so the browser allows it
-  $("#rsNotice").textContent = "Copying your reservation details…";
+function notice(text){ const n=$("#rsNotice"); n.textContent = text; n.hidden = false; }
+function openMessenger(e){
+  e.preventDefault();
+  const copied = copyText(reservationMsg);            // copy first, inside the tap
   if (isPhone()){
-    copied.then(ok => { showCopied(ok); setTimeout(()=>{ location.href = CONFIG.messengerUrl; }, ok ? 1400 : 2600); });
+    copied.then(ok => {
+      notice(ok ? "Your reservation details have been copied. Paste the message in Messenger and send it to us."
+                : "Opening Messenger. Tap Copy reservation details if you need the message again.");
+      setTimeout(()=>{ location.href = CONFIG.messengerUrl; }, 1400);   // same tab lets the Messenger app take over
+    });
   } else {
-    const w = window.open(CONFIG.messengerUrl, "_blank", "noopener");
-    copied.then(showCopied);
-    if (!w) $("#rsMessenger").focus();    // pop-up blocked: the button below opens it
+    window.open(CONFIG.messengerUrl, "_blank", "noopener");           // desktop: keep the site open
+    copied.then(ok => notice(ok ? "Your reservation details have been copied. Paste the message in Messenger and send it to us."
+                                : "Messenger opened in a new tab. Tap Copy reservation details, then paste it there."));
   }
+}
+function openSms(){
+  copyText(reservationMsg).then(ok => notice(isPhone()
+    ? (ok ? `Your messages app should open with the details filled in. If it's empty, paste the copied message and send it to ${fmtPhone(CONFIG.phone)}.`
+          : `Your messages app should open with the details filled in. If it's empty, text us at ${fmtPhone(CONFIG.phone)}.`)
+    : `Text your reservation to ${fmtPhone(CONFIG.phone)} from your phone.${ok ? " The details have been copied." : ""}`));
+  // the link itself (sms:...) opens the messages app; no preventDefault
 }
 
 /* ---------- lightbox ---------- */
@@ -899,12 +906,10 @@ $("#qvReserve").addEventListener("click", ()=>openReserve(current.id));
 $("#rsItem").addEventListener("change", syncPicked);
 $("#rsForm").addEventListener("submit", submitReserve);
 $("#rsCopy").addEventListener("click", ()=>{
-  copyText($("#rsMsg").textContent).then(ok => { showCopied(ok); if (ok) toast("Reservation details copied"); });
+  copyText(reservationMsg).then(ok => ok ? toast("Reservation details copied") : notice(reservationMsg));
 });
-$("#rsMessenger").addEventListener("click", e=>{
-  e.preventDefault();
-  sendToMessenger($("#rsMsg").textContent);
-});
+$("#rsMessenger").addEventListener("click", openMessenger);
+$("#rsSms").addEventListener("click", openSms);
 $("#lbClose").addEventListener("click", closeLightbox);
 $("#lb").addEventListener("click", e=>{ if (e.target.id==="lb") closeLightbox(); });
 document.addEventListener("keydown", e=>{
