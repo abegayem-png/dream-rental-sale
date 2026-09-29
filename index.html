@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dream Rental</title>
+<meta name="description" content="Dream Rental, Davao City. 50% off gown rentals, September 29 to October 1. Evening gowns, cocktail dresses, party dresses and tops for rent.">
+<meta name="theme-color" content="#F8F5F3">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Dream Rental · 50% off gown rentals">
+<meta property="og:description" content="September 29 – October 1 only. Your dream look, for less.">
+<meta property="og:image" content="/photos/look-05.jpg">
+<link rel="preload" as="image" href="/photos/look-05.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..500&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* ============ DESIGN SYSTEM ============ */
+:root{
+  color-scheme: light;
+  --bg:#F8F5F3;        /* pearl: primary background */
+  --bg-2:#EFE3E0;      /* blush mist: secondary background */
+  --ink:#221A1D;       /* main text */
+  --ink-soft:#6F6367;
+  --accent:#5E2233;    /* bordeaux: brand accent, primary buttons */
+  --accent-ink:#FBF3F1;
+  --promo:#C23A55;     /* sale rose: promotional accent only */
+  --line:rgba(34,26,29,.12);
+  --serif:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans:"Jost", "Futura", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --gutter:20px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-t:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html.locked{overflow:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased;padding-bottom:calc(76px + var(--safe-b))}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--promo);outline-offset:3px}
+.wrap{padding-inline:var(--gutter);max-width:1240px;margin-inline:auto}
+
+/* type */
+.eyebrow{font:500 11px/1.2 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin:0}
+.h-display{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;line-height:1.02;text-wrap:balance;margin:0}
+.h-section{font-family:var(--serif);font-weight:400;font-size:clamp(28px,7.4vw,44px);line-height:1.08;margin:0;text-wrap:balance}
+.h-section em,.h-display em{font-style:italic}
+.lede{color:var(--ink-soft);max-width:36ch;margin:0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;font:500 13px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;text-align:center;transition:transform .18s var(--ease),background-color .25s,color .25s}
+.btn:active{transform:scale(.97)}
+.btn-solid{background:var(--accent);color:var(--accent-ink)}
+.btn-solid:hover{background:#4a1928}
+.btn-light{background:var(--bg);color:var(--ink)}
+.btn-light:hover{background:#fff}
+.btn-line{border:1px solid var(--ink);color:var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--bg)}
+.btn-block{width:100%}
+.btn .arrow{transition:transform .25s var(--ease)}
+.btn:hover .arrow{transform:translateX(4px)}
+
+/* price */
+.price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
+.price s{color:var(--ink-soft);font-size:14px;text-decoration-thickness:1px}
+.price strong{font:500 20px/1 var(--sans);color:var(--ink)}
+.tbc{font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;background:var(--promo);color:#fff;font:600 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.tag-ghost{background:transparent;color:var(--promo);border:1px solid var(--promo)}
+
+/* media frames */
+.media{position:relative;overflow:hidden;background:var(--bg-2)}
+.media > img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;transition:transform 1.2s var(--ease),opacity .6s}
+.media > img[loading]{opacity:0}
+.media > img.ok{opacity:1}
+.media .badge{position:absolute;left:10px;top:10px;z-index:2}
+
+/* ============ ANNOUNCEMENT + HEADER ============ */
+.topbar{position:fixed;inset:0 0 auto 0;z-index:40;padding-top:var(--safe-t);transition:background-color .35s,box-shadow .35s,color .35s;color:#fff}
+.announce{background:var(--accent);color:var(--accent-ink);font:500 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;height:32px;display:flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;overflow:hidden}
+.announce .dot{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.6}
+.announce b{font-weight:600;font-variant-numeric:tabular-nums}
+.nav{height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{font:500 21px/1 var(--serif);letter-spacing:.02em;text-decoration:none}
+.logo i{font-weight:400}
+.nav-links{display:none;gap:30px;font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.nav-links a{text-decoration:none;opacity:.85}
+.nav-links a:hover{opacity:1}
+.nav-cta{font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-block:4px}
+.topbar.solid{background:rgba(248,245,243,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:max(580px,min(88svh,860px));display:flex;align-items:flex-end;color:#fff;overflow:hidden;isolation:isolate;background:#3a1420}
+.hero-media{position:absolute;inset:-4% 0 0 0;z-index:-2;will-change:transform}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,8,12,.42) 0%,rgba(20,8,12,0) 24%,rgba(20,8,12,0) 40%,rgba(20,8,12,.82) 100%)}
+.hero-inner{width:100%;padding-block:0 40px;display:grid;gap:16px}
+.hero .eyebrow{color:rgba(255,255,255,.85)}
+.hero h1{font-size:clamp(52px,15vw,104px)}
+.hero h1 .pct{display:block;font-weight:500}
+.hero-dates{display:flex;align-items:center;gap:12px;font:500 12px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase}
+.hero-dates::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+.hero-tagline{font:italic 400 19px/1.3 var(--serif);margin:0;color:rgba(255,255,255,.94)}
+.hero .btn{justify-self:start;margin-top:4px}
+.hero-load > *{animation:rise .9s var(--ease) both}
+.hero-load > *:nth-child(2){animation-delay:.08s}.hero-load > *:nth-child(3){animation-delay:.16s}.hero-load > *:nth-child(4){animation-delay:.24s}.hero-load > *:nth-child(5){animation-delay:.32s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ============ SECTIONS ============ */
+section{scroll-margin-top:96px}
+.sec{padding-block:64px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px}
+.sec-head .stack{display:grid;gap:10px}
+
+/* category rail */
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-inline:var(--gutter);margin-inline:calc(var(--gutter) * -1);scroll-padding-inline:var(--gutter)}
+.rail::-webkit-scrollbar{display:none}
+.cat{flex:0 0 38%;max-width:190px;scroll-snap-align:start;display:grid;gap:10px;text-align:left}
+.cat .media{aspect-ratio:3/4;border-radius:2px}
+.cat span{font:500 11px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.cat small{display:block;color:var(--ink-soft);font-size:12px;letter-spacing:0;text-transform:none;margin-top:4px;font-weight:400}
+.cat:hover .media > img{transform:scale(1.05)}
+
+/* featured */
+.featured .media{aspect-ratio:4/5;margin-inline:calc(var(--gutter) * -1)}
+.feat-body{display:grid;gap:12px;padding-top:22px}
+.feat-body .name{font:400 34px/1.05 var(--serif);margin:0;text-wrap:balance}
+.feat-body .meta{color:var(--ink-soft);font-size:14px;margin:0}
+.feat-body .price strong{font-size:26px}
+.feat-body .btn{justify-self:start;margin-top:6px}
+
+/* product card */
+.card{display:grid;gap:12px;text-align:left;width:100%;align-content:start}
+.card .media{aspect-ratio:3/4;border-radius:2px}
+.card:hover .media > img,.card:active .media > img{transform:scale(1.045)}
+.card-name{font:400 18px/1.18 var(--serif);margin:0;text-wrap:balance}
+.card-cat{font:500 10px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.card .price strong{font-size:17px}
+.card .price s{font-size:13px}
+.card-info{display:grid;gap:5px}
+.card-size{font-size:13px;line-height:1.3;color:var(--ink-soft)}
+
+/* pair (offset editorial) */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.pair > :nth-child(2){margin-top:56px}
+
+/* reminder band */
+.band{background:var(--bg-2);padding-block:52px;text-align:center}
+.band .inner{display:grid;gap:14px;justify-items:center}
+.count{display:flex;gap:18px;justify-content:center;font-variant-numeric:tabular-nums}
+.count div{display:grid;gap:4px;min-width:48px}
+.count b{font:400 34px/1 var(--serif)}
+.count span{font:500 10px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* carousel */
+.carousel{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-inline:var(--gutter);margin-inline:calc(var(--gutter) * -1);scroll-padding-inline:var(--gutter);overscroll-behavior-x:contain}
+.carousel::-webkit-scrollbar{display:none}
+.carousel > .card{flex:0 0 72%;max-width:320px;scroll-snap-align:start}
+.progress{height:2px;background:var(--line);margin-top:24px;position:relative;overflow:hidden}
+.progress i{position:absolute;inset:0 auto 0 0;width:30%;background:var(--ink)}
+.car-ctrl{display:none;gap:8px}
+.car-ctrl button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:background .2s,color .2s}
+.car-ctrl button:hover{background:var(--ink);color:var(--bg)}
+
+/* campaign */
+.campaign{position:relative;color:#fff;min-height:600px;display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.campaign .media{position:absolute;inset:0;z-index:-2;background:#1f2a24}
+.campaign::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(14,18,16,0) 30%,rgba(14,18,16,.8) 100%)}
+.campaign .inner{padding-block:48px;display:grid;gap:16px;width:100%}
+.campaign .eyebrow{color:rgba(255,255,255,.82)}
+.campaign h2{font-size:clamp(34px,9vw,64px)}
+.campaign p{margin:0;max-width:32ch;color:rgba(255,255,255,.9)}
+.campaign .from{font:italic 400 22px/1 var(--serif);color:#fff;white-space:nowrap}
+.campaign .btn{justify-self:start}
+
+/* how it works + trust */
+.steps{list-style:none;margin:0;padding:0;display:grid;counter-reset:s}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding-block:18px;border-top:1px solid var(--line)}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+.steps li::before{counter-increment:s;content:counter(s,decimal-leading-zero);font:italic 400 22px/1 var(--serif);color:var(--promo);grid-row:span 2}
+.steps b{font:500 15px/1.3 var(--sans)}
+.steps span{color:var(--ink-soft);font-size:14px}
+.trust{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0;padding:0}
+.trust li{list-style:none;border:1px solid var(--line);border-radius:999px;padding:9px 14px;font:500 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.how-grid{display:grid;gap:34px}
+
+/* shop grid */
+.filters{position:sticky;top:calc(88px + var(--safe-t));z-index:20;background:rgba(248,245,243,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);padding-block:12px;margin-bottom:18px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-inline:var(--gutter);margin-inline:calc(var(--gutter) * -1)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;transition:background .25s,color .25s,border-color .25s}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:28px 14px;transition:opacity .25s}
+.grid.fading{opacity:0}
+.grid-count{color:var(--ink-soft);font-size:13px;margin:0 0 14px}
+.more{display:flex;justify-content:center;margin-top:36px}
+
+/* final CTA */
+.final{background:var(--accent);color:var(--accent-ink);text-align:center;padding-block:76px}
+.final .inner{display:grid;gap:16px;justify-items:center}
+.final .eyebrow{color:rgba(251,243,241,.75)}
+.final .big{font:500 clamp(84px,27vw,180px)/.9 var(--serif);letter-spacing:-.03em;margin:0}
+.final .big small{display:block;font:italic 400 .3em/1.2 var(--serif);letter-spacing:0}
+.final .count b{color:var(--accent-ink)}
+.final .count span{color:rgba(251,243,241,.7)}
+.final .btn{margin-top:10px}
+
+/* footer */
+footer{padding-block:48px 32px;display:grid;gap:22px}
+footer .logo{font-size:26px}
+footer dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0;font-size:14px}
+footer dt{font:500 10px/1.8 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+footer dd{margin:0}
+footer small{color:var(--ink-soft)}
+
+/* ============ STICKY MOBILE BAR ============ */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:35;padding:10px 12px calc(10px + var(--safe-b));display:grid;grid-template-columns:auto 1fr;gap:8px;background:rgba(248,245,243,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 -1px 0 var(--line);transform:translateY(110%);transition:transform .45s var(--ease)}
+.dock.show{transform:none}
+.dock .btn{min-height:48px}
+.dock .btn-line{padding:0 20px}
+
+/* ============ SHEETS ============ */
+.scrim{position:fixed;inset:0;z-index:60;background:rgba(20,10,14,.45);opacity:0;pointer-events:none;transition:opacity .35s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--bg);border-radius:18px 18px 0 0;max-height:94svh;display:flex;flex-direction:column;transform:translateY(105%);transition:transform .5s var(--ease);box-shadow:0 -10px 40px rgba(20,10,14,.18)}
+.sheet.on{transform:none}
+.sheet-scroll{overflow-y:auto;overscroll-behavior:contain;flex:1}
+.grab{width:40px;height:4px;border-radius:4px;background:rgba(255,255,255,.8);position:absolute;left:50%;translate:-50% 0;top:8px;z-index:3}
+#rs .grab{background:var(--line)}
+.x{position:absolute;right:12px;top:12px;z-index:4;width:40px;height:40px;border-radius:50%;background:rgba(248,245,243,.94);display:grid;place-items:center;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.qv-photo{display:block;width:100%;aspect-ratio:4/5;max-height:60svh;border-radius:18px 18px 0 0;cursor:zoom-in}
+.qv-photo .hint{position:absolute;right:12px;bottom:12px;font:500 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;background:rgba(248,245,243,.92);color:var(--ink);padding:7px 10px;border-radius:999px}
+.qv-body{padding:20px var(--gutter) 8px;display:grid;gap:14px}
+.qv-body .name{font:400 30px/1.08 var(--serif);margin:0;text-wrap:balance}
+.qv-body .price strong{font-size:26px}
+.facts{margin:0;padding:0;list-style:none;display:grid;gap:10px;font-size:14px}
+.facts li{display:grid;grid-template-columns:96px 1fr;gap:12px;padding-block:10px;border-top:1px solid var(--line)}
+.facts li:last-child{border-bottom:1px solid var(--line)}
+.facts span{font:500 10px/1.9 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.sheet-foot{padding:12px var(--gutter) calc(12px + var(--safe-b));border-top:1px solid var(--line);background:var(--bg)}
+
+/* reserve form */
+.form{padding:30px var(--gutter) 8px;display:grid;gap:16px}
+.form h3{font:400 30px/1.05 var(--serif);margin:0}
+.field{display:grid;gap:8px}
+.field label{font:500 10px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+.field input,.field select{height:50px;border:1px solid var(--line);border-radius:6px;background:#fff;padding:0 14px;font:400 16px/1 var(--sans);color:var(--ink);width:100%;appearance:none;-webkit-appearance:none}
+.field input:focus,.field select:focus{outline:none;border-color:var(--ink)}
+.picked{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;background:var(--bg-2);padding:10px;border-radius:6px}
+.picked .media{aspect-ratio:3/4;border-radius:3px}
+.picked b{font:400 17px/1.15 var(--serif);display:block}
+.done{padding:36px var(--gutter) 8px;display:grid;gap:16px}
+.done .tick{width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;animation:pop .5s var(--ease)}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+.msg{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px;font:400 14px/1.5 var(--sans);margin:0;user-select:all}
+.fine{font-size:13px;color:var(--ink-soft);margin:0}
+.phone{font:500 20px/1 var(--sans);letter-spacing:.04em;user-select:all}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:90;background:#0e0a0b;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .3s;padding:56px 0 calc(16px + var(--safe-b))}
+.lightbox.on{opacity:1;pointer-events:auto}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain;touch-action:pinch-zoom}
+.lightbox .x{top:calc(12px + var(--safe-t))}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(90px + var(--safe-b));z-index:100;translate:-50% 20px;opacity:0;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:999px;font:500 13px/1 var(--sans);transition:all .35s var(--ease);pointer-events:none;white-space:nowrap}
+.toast.on{translate:-50% 0;opacity:1}
+
+/* ============ SCROLL REVEAL ============ */
+[data-reveal]{transition:opacity .9s var(--ease),transform .9s var(--ease)}
+[data-reveal].pre{opacity:0;transform:translateY(26px)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* ============ DESKTOP ADAPTATION ============ */
+@media (min-width:760px){
+  :root{--gutter:40px}
+  body{padding-bottom:0}
+  .dock{display:none}
+  .nav{height:68px}
+  .nav-links{display:flex}
+  .logo{font-size:24px}
+  .sec{padding-block:96px}
+  /* split hero: text left, photo right */
+  .hero{min-height:min(92vh,860px);background:var(--accent);align-items:center}
+  .hero-media{inset:0 0 0 46%}
+  .hero::after{background:linear-gradient(90deg,var(--accent) 46%,rgba(94,34,51,0) 62%)}
+  .hero-inner{padding-block:120px 72px;max-width:1240px}
+  .hero-inner > *{max-width:560px}
+  .cat{flex:1 1 0;max-width:none}
+  .rail{overflow:visible;margin:0;padding:0}
+  .featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1040px;margin-inline:auto}
+  .featured .media{margin-inline:0}
+  .feat-body .name{font-size:48px}
+  .pair{gap:32px;max-width:880px;margin-inline:auto}
+  .pair > :nth-child(2){margin-top:120px}
+  .carousel > .card{flex-basis:calc((100% - 42px) / 4)}
+  .car-ctrl{display:flex}
+  .campaign{min-height:720px}
+  .campaign .media > img{object-position:50% 30%}
+  .how-grid{grid-template-columns:1fr 1.2fr;gap:80px;align-items:start}
+  .grid{grid-template-columns:repeat(3,1fr);gap:44px 24px}
+  .filters{top:calc(100px + var(--safe-t))}
+  .sheet{left:50%;right:auto;bottom:auto;top:50%;width:min(900px,92vw);max-height:88vh;border-radius:14px;transform:translate(-50%,-46%);opacity:0;pointer-events:none;transition:transform .45s var(--ease),opacity .3s}
+  .sheet.on{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+  .grab{display:none}
+  #qv .sheet-scroll{display:grid;grid-template-columns:1fr 1fr}
+  #qv .qv-photo{border-radius:14px 0 0 0;max-height:none;height:100%}
+  #qv .qv-body{padding:44px 36px;align-content:start}
+  #rs{width:min(520px,92vw)}
+  footer{grid-template-columns:1fr 1fr;align-items:start}
+  .toast{bottom:32px}
+}
+@media (min-width:1100px){
+  .grid{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="topbar" id="topbar">
+  <div class="announce">
+    <span>50% off rentals</span><span class="dot"></span><span id="announceTime">Sept 29 – Oct 1</span>
+  </div>
+  <nav class="nav wrap" aria-label="Main">
+    <a class="logo" href="#top">Dream <i>Rental</i></a>
+    <div class="nav-links">
+      <a href="#categories">Shop by style</a>
+      <a href="#shop">All outfits</a>
+      <a href="#how">How to reserve</a>
+    </div>
+    <button class="nav-cta" data-reserve>Reserve</button>
+  </nav>
+</header>
+
+<main id="top">
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-label="50% off gown rentals">
+    <div class="hero-media" id="heroMedia"><img src="/photos/look-05.jpg" alt="Merlot satin gown with a front slit" fetchpriority="high"></div>
+    <div class="hero-inner wrap hero-load">
+      <p class="eyebrow">Dream Rental · Davao City</p>
+      <h1 class="h-display"><span class="pct">50% off</span><em>gown rentals</em></h1>
+      <div class="hero-dates">September 29 – October 1</div>
+      <p class="hero-tagline">Your dream look, for less.</p>
+      <a class="btn btn-light" href="#featured">Shop the 50% off sale <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <!-- ============ CATEGORIES ============ -->
+  <section class="sec wrap" id="categories" style="padding-bottom:24px">
+    <div class="sec-head" data-reveal>
+      <div class="stack">
+        <p class="eyebrow">Shop by style</p>
+        <h2 class="h-section">Find your <em>look</em></h2>
+      </div>
+    </div>
+    <div class="rail" id="catRail" data-reveal></div>
+  </section>
+
+  <!-- ============ FEATURED ============ -->
+  <section class="sec wrap featured" id="featured">
+    <div class="featured-grid" id="featuredSlot" data-reveal></div>
+  </section>
+
+  <!-- ============ PAIR ============ -->
+  <section class="sec wrap" style="padding-top:8px">
+    <div class="sec-head" data-reveal>
+      <div class="stack">
+        <p class="eyebrow">The evening edit</p>
+        <h2 class="h-section">Made to <em>shimmer</em></h2>
+      </div>
+    </div>
+    <div class="pair" id="pairSlot"></div>
+  </section>
+
+  <!-- ============ REMINDER 1 ============ -->
+  <section class="band" aria-label="Sale reminder">
+    <div class="inner wrap" data-reveal>
+      <p class="eyebrow">Found your dress?</p>
+      <h2 class="h-section">50% off ends <em>October 1</em></h2>
+      <div class="count" data-count></div>
+      <button class="btn btn-solid" data-reserve style="margin-top:8px">Reserve your gown</button>
+    </div>
+  </section>
+
+  <!-- ============ CAROUSEL ============ -->
+  <section class="sec wrap">
+    <div class="sec-head" data-reveal>
+      <div class="stack">
+        <p class="eyebrow">Swipe the collection</p>
+        <h2 class="h-section">Cocktail <em>&amp;</em> mini</h2>
+      </div>
+      <div class="car-ctrl">
+        <button aria-label="Previous" data-car="-1">←</button>
+        <button aria-label="Next" data-car="1">→</button>
+      </div>
+    </div>
+    <div class="carousel" id="carousel" data-reveal></div>
+    <div class="progress" aria-hidden="true"><i id="carProg"></i></div>
+  </section>
+
+  <!-- ============ CAMPAIGN ============ -->
+  <section class="campaign" aria-label="Campaign">
+    <div class="media"><img src="/photos/look-37.jpg" alt="Powder blue puff-sleeve gown" loading="lazy" decoding="async"></div>
+    <div class="inner wrap" data-reveal>
+      <p class="eyebrow">Limited promotion</p>
+      <h2 class="h-display">Your event deserves <em>the right dress.</em></h2>
+      <p>Browse Dream Rental evening gowns from only <span class="from" id="fromPrice"></span>.</p>
+      <a class="btn btn-light" href="#shop" data-filter-link="evening">Browse evening gowns <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS / TRUST ============ -->
+  <section class="sec wrap" id="how">
+    <div class="how-grid">
+      <div style="display:grid;gap:14px" data-reveal>
+        <p class="eyebrow">Real local outfit rental</p>
+        <h2 class="h-section">Reserving takes <em>two minutes</em></h2>
+        <p class="lede">Pick an outfit, tell us your event date, and we confirm with you directly. No account and no online payment.</p>
+      </div>
+      <div data-reveal>
+        <ol class="steps">
+          <li><b>Choose your outfit</b><span>Tap any photo to see the size range and rental price.</span></li>
+          <li><b>Add your event date</b><span>A short form turns your details into a ready-to-send message.</span></li>
+          <li><b>Send it to Dream Rental</b><span>Text, call or message us on Facebook, and we'll confirm your date.</span></li>
+          <li><b>Wear it, then return it</b><span>Enjoy your event, then bring the outfit back.</span></li>
+        </ol>
+        <ul class="trust" id="trustList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SHOP ALL ============ -->
+  <section class="wrap" id="shop" style="padding-bottom:72px">
+    <div class="sec-head" data-reveal>
+      <div class="stack">
+        <p class="eyebrow">The full collection</p>
+        <h2 class="h-section">Everything <em>for rent</em></h2>
+      </div>
+    </div>
+    <div class="filters"><div class="chips" id="chips" role="toolbar" aria-label="Filter outfits"></div></div>
+    <p class="grid-count" id="gridCount" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+    <div class="more"><button class="btn btn-line" id="moreBtn">Show more</button></div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final" aria-label="Sale ends soon">
+    <div class="inner wrap" data-reveal>
+      <p class="eyebrow">3 days only · Sept 29 – Oct 1</p>
+      <p class="big">50%<small>off gown rentals</small></p>
+      <div class="count" data-count></div>
+      <button class="btn btn-light" data-reserve>Reserve before the sale ends</button>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div style="display:grid;gap:10px">
+    <a class="logo" href="#top">Dream <i>Rental</i></a>
+    <small>Quick and hassle-free outfit renting in Davao City.</small>
+  </div>
+  <dl id="contactList"></dl>
+</footer>
+
+<!-- ============ STICKY MOBILE DOCK ============ -->
+<div class="dock" id="dock">
+  <a class="btn btn-line" href="#shop">Browse</a>
+  <button class="btn btn-solid" data-reserve>Reserve a gown</button>
+</div>
+
+<!-- ============ QUICK VIEW ============ -->
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="qv" role="dialog" aria-modal="true" aria-labelledby="qvName" hidden>
+  <span class="grab" aria-hidden="true"></span>
+  <button class="x" data-close aria-label="Close">✕</button>
+  <div class="sheet-scroll">
+    <button class="media qv-photo" id="qvPhoto" aria-label="Enlarge photo"></button>
+    <div class="qv-body">
+      <div style="display:flex;gap:8px;flex-wrap:wrap" id="qvTags"></div>
+      <p class="card-cat" id="qvCat"></p>
+      <h3 class="name" id="qvName"></h3>
+      <div class="price" id="qvPrice"></div>
+      <ul class="facts" id="qvFacts"></ul>
+    </div>
+  </div>
+  <div class="sheet-foot"><button class="btn btn-solid btn-block" id="qvReserve">Reserve this gown</button></div>
+</div>
+
+<!-- ============ RESERVE ============ -->
+<div class="sheet" id="rs" role="dialog" aria-modal="true" aria-labelledby="rsTitle" hidden>
+  <span class="grab" aria-hidden="true"></span>
+  <button class="x" data-close aria-label="Close">✕</button>
+  <div class="sheet-scroll">
+    <form class="form" id="rsForm" novalidate>
+      <p class="eyebrow">50% off · ends Oct 1</p>
+      <h3 id="rsTitle">Reserve your look</h3>
+      <div class="picked" id="rsPicked" hidden></div>
+      <div class="field" id="rsItemField">
+        <label for="rsItem">Outfit</label>
+        <select id="rsItem" required></select>
+      </div>
+      <div class="field">
+        <label for="rsDate">Event date</label>
+        <input id="rsDate" type="date" required>
+      </div>
+      <div class="field">
+        <label for="rsName">Your name</label>
+        <input id="rsName" type="text" autocomplete="name" placeholder="Your full name" required>
+      </div>
+      <div class="field">
+        <label for="rsSize">Your usual size (optional)</label>
+        <input id="rsSize" type="text" placeholder="e.g. Small, or Medium top / Large bottom">
+      </div>
+      <p class="fine" id="rsError" role="alert" style="color:var(--promo)" hidden></p>
+      <p class="fine">Dream Rental confirms availability with you personally. Nothing is charged here.</p>
+    </form>
+    <div class="done" id="rsDone" hidden>
+      <div id="rsSent" hidden style="display:grid;gap:14px">
+        <div class="tick" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        <h3 class="h-section" style="font-size:28px">Reservation request received. <em>We’ll contact you to confirm availability.</em></h3>
+      </div>
+      <div id="rsSend" style="display:grid;gap:10px">
+        <p class="eyebrow">Last step</p>
+        <h3 class="h-section" style="font-size:30px">Send your <em>request</em></h3>
+        <p class="fine">Text or message this to Dream Rental so we receive it.</p>
+      </div>
+      <pre class="msg" id="rsMsg"></pre>
+      <div style="display:grid;gap:10px">
+        <button class="btn btn-solid btn-block" id="rsCopy" type="button">Copy message</button>
+        <a class="btn btn-line btn-block" id="rsSms">Text it to Dream Rental</a>
+        <a class="btn btn-line btn-block" id="rsForm2" target="_blank" rel="noopener" hidden>Or use the booking form</a>
+      </div>
+      <div style="display:grid;gap:6px;padding-top:6px">
+        <span class="eyebrow">Call or text</span>
+        <span class="phone" id="rsPhone"></span>
+        <span class="fine" id="rsFb"></span>
+      </div>
+    </div>
+  </div>
+  <div class="sheet-foot" id="rsFoot"><button class="btn btn-solid btn-block" type="submit" form="rsForm">Continue</button></div>
+</div>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <button class="x" id="lbClose" aria-label="Close photo">✕</button>
+  <img id="lbImg" alt="">
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* =====================================================================
+   DREAM RENTAL CONTENT — edit this block to update the site.
+   price = rental price in pesos, exactly as shown on the Canva site.
+   price: null shows "Price to confirm" (used where Canva lists two prices).
+   ===================================================================== */
+const CONFIG = {
+  saleEnds:   "2026-10-01T23:59:59+08:00",   // Manila time
+  saleStarts: "2026-09-29T00:00:00+08:00",
+  phone: "09912091390",
+  facebook: "Dream Rental",                  // page name as shown on Facebook
+  facebookUrl: "",                           // e.g. "https://www.facebook.com/yourpage"
+  location: "Davao City",
+  trust: ["Local shop in Davao City", "Prices shown upfront", "No online payment to reserve", "Sizes XS to XL"]
+};
+
+const CATEGORIES = [
+  {id:"evening",  name:"Evening Gowns",     short:"Gowns"},
+  {id:"cocktail", name:"Cocktail & Mini",   short:"Cocktail"},
+  {id:"floral",   name:"Floral & Party",    short:"Floral"},
+  {id:"tops",     name:"Tops & Blouses",    short:"Tops"}
+];
+
+const ITEMS = [
+  {"id": "look-01", "name": "Look 01", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-01.jpg", "form": "https://forms.gle/6SmYT84GgxXq9f9x8"},
+  {"id": "look-02", "name": "Look 02", "cat": "evening", "size": "Small to Large", "price": 1000, "img": "/photos/look-02.jpg", "form": "https://forms.gle/HTAQtQ1nRRwoCtUeA"},
+  {"id": "look-03", "name": "Look 03", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-03.jpg", "form": "https://forms.gle/rz53TJs2HMY4uKV16"},
+  {"id": "look-04", "name": "Look 04", "cat": "evening", "size": "Medium to Large", "price": null, "img": "/photos/look-04.jpg", "form": "https://forms.gle/CRmJEZyTzhp7twFX8"},
+  {"id": "look-05", "name": "Look 05", "cat": "evening", "size": "Small to Large", "price": 1050, "img": "/photos/look-05.jpg", "form": "https://forms.gle/79bVfBcUTi7P73bT6"},
+  {"id": "look-06", "name": "Look 06", "cat": "cocktail", "size": "Small to Large", "price": 550, "img": "/photos/look-06.jpg"},
+  {"id": "look-07", "name": "Look 07", "cat": "evening", "size": "Small to Large", "price": 780, "img": "/photos/look-07.jpg", "form": "https://forms.gle/dnSdgHGYuaxAxmjN8"},
+  {"id": "look-08", "name": "Look 08", "cat": "evening", "size": "Small to Large", "price": 700, "img": "/photos/look-08.jpg"},
+  {"id": "look-09", "name": "Look 09", "cat": "cocktail", "size": "Small to Large", "price": 700, "img": "/photos/look-09.jpg", "form": "https://forms.gle/jZzGYyCVFxoLmfVg7"},
+  {"id": "look-10", "name": "Look 10", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-10.jpg", "form": "https://forms.gle/GhzDXmn3yKsBepEf8"},
+  {"id": "look-11", "name": "Look 11", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-11.jpg", "form": "https://forms.gle/GhzDXmn3yKsBepEf8"},
+  {"id": "look-12", "name": "Look 12", "cat": "cocktail", "size": "XS to Medium", "price": 580, "img": "/photos/look-12.jpg", "form": "https://forms.gle/GhzDXmn3yKsBepEf8"},
+  {"id": "look-13", "name": "Look 13", "cat": "cocktail", "size": "Small to Medium or XS to Medium", "price": null, "img": "/photos/look-13.jpg", "form": "https://forms.gle/dNeFQPMciUZERQqAA"},
+  {"id": "look-14", "name": "Look 14", "cat": "floral", "size": "XS to Medium", "price": 700, "img": "/photos/look-14.jpg", "form": "https://forms.gle/ncFaUFbEG7t6Kpro9"},
+  {"id": "look-15", "name": "Look 15", "cat": "floral", "size": "XS to Medium", "price": 650, "img": "/photos/look-15.jpg", "form": "https://forms.gle/Ks6AcPDCEADACC2V8"},
+  {"id": "look-16", "name": "Look 16", "cat": "floral", "size": "Small to Medium or Medium to Large", "price": null, "img": "/photos/look-16.jpg", "form": "https://forms.gle/J3jp3Auo84z7he6B7"},
+  {"id": "look-17", "name": "Look 17", "cat": "floral", "size": "Small to Medium or XS to Medium", "price": null, "img": "/photos/look-17.jpg"},
+  {"id": "look-18", "name": "Look 18", "cat": "floral", "size": "XS to Medium", "price": 600, "img": "/photos/look-18.jpg", "form": "https://forms.gle/PgfbstbbPmzCvF4U6"},
+  {"id": "look-19", "name": "Look 19", "cat": "floral", "size": "XS to Medium", "price": 800, "img": "/photos/look-19.jpg", "note": "Black color available", "form": "https://forms.gle/g53QxDSXu8CrG7UK6"},
+  {"id": "look-20", "name": "Look 20", "cat": "cocktail", "size": "Small to Medium", "price": null, "img": "/photos/look-20.jpg", "form": "https://forms.gle/1jDbF69GLzHvvx3e6"},
+  {"id": "look-21", "name": "Look 21", "cat": "cocktail", "size": "Small to Medium", "price": 550, "img": "/photos/look-21.jpg"},
+  {"id": "look-22", "name": "Look 22", "cat": "tops", "size": "XS to Medium", "price": 399, "img": "/photos/look-22.jpg"},
+  {"id": "look-23", "name": "Look 23", "cat": "cocktail", "size": "Medium to Large", "price": 700, "img": "/photos/look-23.jpg"},
+  {"id": "look-24", "name": "Look 24", "cat": "tops", "size": "XS to Medium", "price": 350, "img": "/photos/look-24.jpg"},
+  {"id": "look-25", "name": "Look 25", "cat": "floral", "size": "Large to XL", "price": 550, "img": "/photos/look-25.jpg"},
+  {"id": "look-26", "name": "Look 26", "cat": "cocktail", "size": "XS to Medium", "price": 850, "img": "/photos/look-26.jpg"},
+  {"id": "look-27", "name": "Look 27", "cat": "evening", "size": "Small to S-Large", "price": 1550, "img": "/photos/look-27.jpg"},
+  {"id": "look-28", "name": "Look 28", "cat": "evening", "size": "XS to Medium", "price": 650, "img": "/photos/look-28.jpg"},
+  {"id": "look-29", "name": "Look 29", "cat": "evening", "size": "XS to Medium", "price": 350, "img": "/photos/look-29.jpg"},
+  {"id": "look-30", "name": "Look 30", "cat": "tops", "size": "Medium to Large", "price": 750, "img": "/photos/look-30.jpg"},
+  {"id": "look-31", "name": "Look 31", "cat": "tops", "size": "Medium to Large", "price": 750, "img": "/photos/look-31.jpg"},
+  {"id": "look-32", "name": "Look 32", "cat": "cocktail", "size": "Small to Large", "price": 500, "img": "/photos/look-32.jpg"},
+  {"id": "look-33", "name": "Look 33", "cat": "cocktail", "size": "XS to Medium", "price": 380, "img": "/photos/look-33.jpg"},
+  {"id": "look-34", "name": "Look 34", "cat": "floral", "size": "XS to Medium", "price": 800, "img": "/photos/look-34.jpg"},
+  {"id": "look-35", "name": "Look 35", "cat": "floral", "size": "XS to Medium", "price": 300, "img": "/photos/look-35.jpg"},
+  {"id": "look-36", "name": "Look 36", "cat": "cocktail", "size": "XS to Medium", "price": 380, "img": "/photos/look-36.jpg"},
+  {"id": "look-37", "name": "Look 37", "cat": "evening", "size": "Medium to Large", "price": 450, "img": "/photos/look-37.jpg"},
+  {"id": "look-38", "name": "Look 38", "cat": "evening", "size": "Small to Medium", "price": 400, "img": "/photos/look-38.jpg"},
+  {"id": "look-39", "name": "Look 39", "cat": "floral", "size": "XS to Medium", "price": 200, "img": "/photos/look-39.jpg"},
+  {"id": "look-40", "name": "Look 40", "cat": "cocktail", "size": "XS to Medium", "price": 450, "img": "/photos/look-40.jpg", "form": "https://forms.gle/VkNB2xkZyKpUkvSR8"},
+  {"id": "look-41", "name": "Look 41", "cat": "cocktail", "size": "XS to Medium", "price": 280, "img": "/photos/look-41.jpg"},
+  {"id": "look-42", "name": "Look 42", "cat": "cocktail", "size": "Small to Medium", "price": 180, "img": "/photos/look-42.jpg"},
+  {"id": "look-43", "name": "Look 43", "cat": "evening", "size": "Small to Medium", "price": 380, "img": "/photos/look-43.jpg"},
+  {"id": "look-44", "name": "Look 44", "cat": "evening", "size": "Medium to Large", "price": 500, "img": "/photos/look-44.jpg"},
+  {"id": "look-45", "name": "Look 45", "cat": "floral", "size": "XS to Medium", "price": 200, "img": "/photos/look-45.jpg"},
+  {"id": "look-46", "name": "Look 46", "cat": "tops", "size": "XS to Medium", "price": 190, "img": "/photos/look-46.jpg"},
+  {"id": "look-47", "name": "Look 47", "cat": "tops", "size": "XS to Medium", "price": 280, "img": "/photos/look-47.jpg"},
+  {"id": "look-48", "name": "Look 48", "cat": "cocktail", "size": "XS to Medium", "price": 320, "img": "/photos/look-48.jpg"},
+  {"id": "look-49", "name": "Look 49", "cat": "cocktail", "size": "Small to Medium", "price": 350, "img": "/photos/look-49.jpg"},
+  {"id": "look-50", "name": "Look 50", "cat": "floral", "size": "Small to Medium", "price": 650, "img": "/photos/look-50.jpg"},
+  {"id": "look-51", "name": "Look 51", "cat": "floral", "size": "Small to Medium", "price": 400, "img": "/photos/look-51.jpg"}
+];
+
+/* ===================================================================== */
+
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const peso = n => "₱" + Math.round(n).toLocaleString("en-PH");
+const priceText = it => it.price == null ? "Price to confirm" : peso(it.price);
+const byId = id => ITEMS.find(g => g.id === id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const catName = id => (CATEGORIES.find(c=>c.id===id)||{}).name || "";
+const inCat = id => ITEMS.filter(i=>i.cat===id);
+const noun = it => it.cat==="evening" ? "gown" : it.cat==="tops" ? "top" : "dress";
+const kind = it => ({evening:"Evening gown", cocktail:"Cocktail dress", floral:"Party dress", tops:"Top"})[it.cat] || "";
+
+/* ---------- renderers ---------- */
+function img(it, eager){
+  return `<img src="${esc(it.img)}" alt="${esc(it.name)}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async" onload="this.classList.add('ok')">`;
+}
+function priceHTML(it){ return it.price == null ? `<span class="tbc">Price to confirm</span>` : `<strong>${peso(it.price)}</strong>`; }
+function cardHTML(it){
+  return `<button class="card" data-item="${it.id}" aria-label="View ${esc(it.name)}, ${esc(kind(it))}, ${priceText(it)}">
+    <div class="media">${img(it)}</div>
+    <div class="card-info">
+      <span class="card-cat">${esc(kind(it))}</span>
+      <h3 class="card-name">${esc(it.name)}</h3>
+      <span class="card-size">${esc(it.size)}</span>
+      <div class="price">${priceHTML(it)}</div>
+    </div></button>`;
+}
+
+const PAGE = 12;
+let filter = "all", shown = PAGE;
+
+function render(){
+  // categories rail: cover = first featured item in the category
+  const cats = CATEGORIES.filter(c => inCat(c.id).length);
+  const covers = {evening:"look-27", cocktail:"look-11", floral:"look-14", tops:"look-22"};
+  $("#catRail").innerHTML = cats.map(c=>{
+    const cover = byId(covers[c.id]) || inCat(c.id)[0];
+    return `<button class="cat" data-cat="${c.id}"><div class="media">${img(cover)}</div>
+      <span>${esc(c.name)}<small>${inCat(c.id).length} pieces</small></span></button>`;
+  }).join("");
+
+  // featured
+  const f = byId("look-27");
+  $("#featuredSlot").innerHTML = `
+    <button class="media" data-item="${f.id}" aria-label="View ${esc(f.name)}" style="display:block">${img(f)}</button>
+    <div class="feat-body">
+      <p class="eyebrow">The statement gown</p>
+      <h2 class="name">${esc(f.name)}</h2>
+      <p class="meta">${esc(kind(f))} · Fits ${esc(f.size)}</p>
+      <div class="price">${priceHTML(f)}</div>
+      <button class="btn btn-line" data-item="${f.id}">View gown <span class="arrow" aria-hidden="true">→</span></button>
+    </div>`;
+
+  // pair
+  $("#pairSlot").innerHTML = ["look-08","look-02"].map(byId).filter(Boolean).map(g=>`<div data-reveal>${cardHTML(g)}</div>`).join("");
+
+  // carousel
+  $("#carousel").innerHTML = inCat("cocktail").map(cardHTML).join("");
+
+  $("#fromPrice").textContent = peso(Math.min(...inCat("evening").filter(i=>i.price!=null).map(i=>i.price)));
+  $("#trustList").innerHTML = CONFIG.trust.map(t=>`<li>${esc(t)}</li>`).join("");
+
+  $("#chips").innerHTML = [{id:"all",short:"All"}, ...cats].map(c=>`<button class="chip" data-filter="${c.id}" aria-pressed="${c.id==="all"}">${esc(c.short)}</button>`).join("");
+  renderGrid(false);
+
+  const fbLine = CONFIG.facebookUrl ? `<a href="${esc(CONFIG.facebookUrl)}" target="_blank" rel="noopener">${esc(CONFIG.facebook)}</a>` : esc(CONFIG.facebook);
+  $("#contactList").innerHTML = `<dt>Visit</dt><dd>${esc(CONFIG.location)}</dd><dt>Call / text</dt><dd><a href="tel:${esc(CONFIG.phone)}">${esc(fmtPhone(CONFIG.phone))}</a></dd><dt>Facebook</dt><dd>${fbLine}</dd>`;
+}
+const fmtPhone = p => p.replace(/^(\d{4})(\d{3})(\d{4})$/,"$1 $2 $3");
+
+function renderGrid(animate=true){
+  const list = filter==="all" ? ITEMS : inCat(filter);
+  const grid = $("#grid");
+  const paint = () => {
+    grid.innerHTML = list.slice(0, shown).map(cardHTML).join("");
+    $("#gridCount").textContent = `${list.length} pieces${filter==="all"?"":" · "+catName(filter)}`;
+    $("#moreBtn").parentElement.hidden = shown >= list.length;
+    $("#moreBtn").textContent = `Show more (${list.length - shown})`;
+    grid.classList.remove("fading");
+  };
+  if (!animate) return paint();
+  grid.classList.add("fading");
+  setTimeout(paint, 220);
+}
+function setFilter(id){
+  filter = id; shown = PAGE;
+  $$("#chips .chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.filter===id));
+  const chip = $(`#chips [data-filter="${id}"]`); chip && chip.scrollIntoView({inline:"center",block:"nearest",behavior:"smooth"});
+  renderGrid();
+}
+
+/* ---------- countdown ---------- */
+const END = new Date(CONFIG.saleEnds).getTime(), START = new Date(CONFIG.saleStarts).getTime();
+function tick(){
+  const t = Date.now(), left = Math.max(0, END - t);
+  const d = Math.floor(left/864e5), h = Math.floor(left/36e5)%24, m = Math.floor(left/6e4)%60, s = Math.floor(left/1e3)%60;
+  const pad = n => String(n).padStart(2,"0");
+  const html = left ? `<div><b>${d}</b><span>days</span></div><div><b>${pad(h)}</b><span>hrs</span></div><div><b>${pad(m)}</b><span>min</span></div><div><b>${pad(s)}</b><span>sec</span></div>` : `<div><b>Ended</b><span>thank you</span></div>`;
+  $$("[data-count]").forEach(el=>el.innerHTML = html);
+  $("#announceTime").innerHTML = !left ? "Sale has ended" : t < START ? "Starts Sept 29" : `Ends in <b>${d?d+"d ":""}${pad(h)}h ${pad(m)}m</b>`;
+}
+
+/* ---------- sheets ---------- */
+let current = null, lastFocus = null;
+function openSheet(el){
+  if (!$(".sheet.on")) lastFocus = document.activeElement;
+  $$(".sheet.on").forEach(s=>{ if(s!==el) closeSheet(s,true); });
+  el.hidden = false;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ el.classList.add("on"); $("#scrim").classList.add("on"); }));
+  document.documentElement.classList.add("locked");
+  $("#dock").classList.remove("show");
+  setTimeout(()=>{ const x = el.querySelector(".x"); x && x.focus({preventScroll:true}); }, 80);
+}
+function closeSheet(el, keepScrim){
+  el.classList.remove("on");
+  setTimeout(()=>{ if(!el.classList.contains("on")) el.hidden = true; }, 500);
+  if (!keepScrim){
+    $("#scrim").classList.remove("on");
+    document.documentElement.classList.remove("locked");
+    onScroll();
+    lastFocus && lastFocus.focus && lastFocus.focus({preventScroll:true});
+  }
+}
+function closeAll(){ $$(".sheet.on").forEach(s=>closeSheet(s)); }
+
+function openQuick(id){
+  const it = byId(id); if(!it) return; current = it;
+  $("#qvPhoto").innerHTML = img(it, true) + `<span class="hint">Tap to enlarge</span>`;
+  $("#qvTags").innerHTML = "";
+  $("#qvCat").textContent = catName(it.cat);
+  $("#qvName").textContent = it.name;
+  $("#qvPrice").innerHTML = priceHTML(it);
+  $("#qvFacts").innerHTML = [
+    ["Fits", it.size],
+    ["Rental", it.price == null ? "Price to confirm with Dream Rental" : peso(it.price)],
+    ...(it.note ? [["Note", it.note]] : []),
+    ["Availability", "Tell us your event date and we'll confirm"]
+  ].map(r=>`<li><span>${r[0]}</span>${esc(r[1])}</li>`).join("");
+  $("#qvReserve").textContent = `Reserve this ${noun(it)}`;
+  $("#qv .sheet-scroll").scrollTop = 0;
+  openSheet($("#qv"));
+}
+
+function openReserve(id){
+  const opts = CATEGORIES.filter(c=>!c.virtual).map(c=>`<optgroup label="${esc(c.name)}">${inCat(c.id).map(x=>`<option value="${x.id}">${esc(x.name)} · ${priceText(x)}</option>`).join("")}</optgroup>`).join("");
+  $("#rsItem").innerHTML = `<option value="">Choose an outfit</option>` + opts;
+  $("#rsItem").value = id || "";
+  syncPicked();
+  $("#rsForm").hidden = false; $("#rsDone").hidden = true; $("#rsFoot").hidden = false; $("#rsError").hidden = true;
+  const today = new Date(); today.setMinutes(today.getMinutes()-today.getTimezoneOffset());
+  $("#rsDate").min = today.toISOString().slice(0,10);
+  $("#rs .sheet-scroll").scrollTop = 0;
+  openSheet($("#rs"));
+}
+function syncPicked(){
+  const it = byId($("#rsItem").value);
+  $("#rsPicked").hidden = !it; $("#rsItemField").hidden = !!it;
+  if (it) $("#rsPicked").innerHTML = `<div class="media">${img(it)}</div><div><b>${esc(it.name)}</b><div class="price" style="margin-top:6px">${priceHTML(it)}</div><button type="button" class="fine" id="rsChange" style="text-decoration:underline;margin-top:6px">Change outfit</button></div>`;
+}
+function submitReserve(e){
+  e.preventDefault();
+  const it = byId($("#rsItem").value), date = $("#rsDate").value, name = $("#rsName").value.trim();
+  const missing = [!it&&"an outfit", !date&&"your event date", !name&&"your name"].filter(Boolean);
+  if (missing.length){ const er=$("#rsError"); er.textContent = "Please add " + missing.join(", ") + "."; er.hidden=false; return; }
+  const nice = new Date(date+"T00:00:00").toLocaleDateString("en-PH",{weekday:"short",month:"long",day:"numeric",year:"numeric"});
+  const size = $("#rsSize").value.trim();
+  const msg = `Hi Dream Rental! I'd like to reserve this outfit.\n\nOutfit: ${it.name} (${kind(it)})\nFits: ${it.size}\nEvent date: ${nice}\nPrice: ${it.price == null ? "please confirm" : peso(it.price)}${size?"\nMy size: "+size:""}\nName: ${name}\n\nIs it available for my date?`;
+  $("#rsMsg").textContent = msg;
+  $("#rsSms").href = `sms:${CONFIG.phone}?&body=${encodeURIComponent(msg)}`;
+  const f = $("#rsForm2"); f.hidden = !it.form; if (it.form) f.href = it.form;
+  $("#rsPhone").textContent = fmtPhone(CONFIG.phone);
+  $("#rsFb").innerHTML = "Facebook: " + (CONFIG.facebookUrl ? `<a href="${esc(CONFIG.facebookUrl)}" target="_blank" rel="noopener">${esc(CONFIG.facebook)}</a>` : esc(CONFIG.facebook));
+  $("#rsForm").hidden = true; $("#rsFoot").hidden = true; $("#rsDone").hidden = false;
+  $("#rsSent").hidden = true; $("#rsSend").hidden = false;
+  $("#rs .sheet-scroll").scrollTop = 0;
+}
+// Shown once the customer has sent (or copied) the request to Dream Rental
+function markSent(){
+  $("#rsSend").hidden = true; $("#rsSent").hidden = false;
+  $("#rs .sheet-scroll").scrollTo({top:0, behavior: reduce ? "auto" : "smooth"});
+}
+
+/* ---------- lightbox ---------- */
+function openLightbox(){
+  if(!current) return;
+  $("#lbImg").src = current.img; $("#lbImg").alt = current.name;
+  const lb = $("#lb"); lb.hidden = false;
+  requestAnimationFrame(()=>lb.classList.add("on"));
+  $("#lbClose").focus({preventScroll:true});
+}
+function closeLightbox(){ const lb=$("#lb"); lb.classList.remove("on"); setTimeout(()=>lb.hidden=true,300); }
+
+/* ---------- toast ---------- */
+let tt; function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("on"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("on"),2200); }
+
+/* ---------- scroll behaviours ---------- */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const mobile = matchMedia("(max-width:759px)");
+let ticking = false;
+function onScroll(){
+  if (ticking) return; ticking = true;
+  requestAnimationFrame(()=>{
+    const y = scrollY, heroH = $(".hero").offsetHeight;
+    $("#topbar").classList.toggle("solid", y > heroH - 120);
+    if (!document.documentElement.classList.contains("locked")) $("#dock").classList.toggle("show", y > heroH * .6);
+    if (!reduce && y < heroH) $("#heroMedia").style.transform = `translate3d(0,${y*0.16}px,0) scale(${1 + y/heroH*0.04})`;
+    ticking = false;
+  });
+}
+function setupReveal(){
+  if (reduce || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.remove("pre"); io.unobserve(e.target);} }), {rootMargin:"0px 0px -8% 0px", threshold:.06});
+  $$("[data-reveal]").forEach(el=>{ if (el.getBoundingClientRect().top > innerHeight){ el.classList.add("pre"); io.observe(el); } });
+}
+function setupCarousel(){
+  const c = $("#carousel"), bar = $("#carProg");
+  const upd = () => { const max = c.scrollWidth - c.clientWidth, vis = c.clientWidth / c.scrollWidth;
+    bar.style.width = (vis*100)+"%"; bar.style.transform = `translateX(${max ? (c.scrollLeft/max)*(1/vis-1)*100 : 0}%)`; };
+  c.addEventListener("scroll", upd, {passive:true}); addEventListener("resize", upd); upd();
+  $$("[data-car]").forEach(b=>b.addEventListener("click",()=>c.scrollBy({left: +b.dataset.car * c.clientWidth*.8, behavior:"smooth"})));
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", e=>{
+  const t = e.target;
+  const item = t.closest("[data-item]"); if (item){ openQuick(item.dataset.item); return; }
+  const cat = t.closest("[data-cat]");
+  if (cat){ setFilter(cat.dataset.cat); $("#shop").scrollIntoView({behavior: reduce?"auto":"smooth"}); return; }
+  const fl = t.closest("[data-filter-link]"); if (fl){ setFilter(fl.dataset.filterLink); return; }
+  const f = t.closest("[data-filter]"); if (f){ setFilter(f.dataset.filter); return; }
+  if (t.closest("[data-reserve]")){ openReserve(null); return; }
+  if (t.closest("#qvPhoto")){ openLightbox(); return; }
+  if (t.closest("[data-close]") || t.id==="scrim"){ closeAll(); return; }
+  if (t.id==="rsChange"){ $("#rsItem").value=""; syncPicked(); $("#rsItem").focus(); return; }
+});
+$("#moreBtn").addEventListener("click", ()=>{ shown += PAGE; renderGrid(false); });
+$("#qvReserve").addEventListener("click", ()=>openReserve(current.id));
+$("#rsItem").addEventListener("change", syncPicked);
+$("#rsForm").addEventListener("submit", submitReserve);
+$("#rsCopy").addEventListener("click", ()=>{
+  const text = $("#rsMsg").textContent;
+  const fallback = ()=>{ const r=document.createRange(); r.selectNodeContents($("#rsMsg")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast("Message selected. Copy it from your menu."); };
+  try { navigator.clipboard.writeText(text).then(()=>toast("Message copied. Paste it in our chat or text."), fallback); } catch(_){ fallback(); }
+  markSent();
+});
+$("#rsSms").addEventListener("click", ()=>setTimeout(markSent, 400));
+$("#rsForm2").addEventListener("click", ()=>setTimeout(markSent, 400));
+$("#lbClose").addEventListener("click", closeLightbox);
+$("#lb").addEventListener("click", e=>{ if (e.target.id==="lb") closeLightbox(); });
+document.addEventListener("keydown", e=>{
+  if (e.key!=="Escape") return;
+  if ($("#lb").classList.contains("on")) closeLightbox(); else closeAll();
+});
+// swipe down to close a bottom sheet (mobile)
+$$(".sheet").forEach(sh=>{
+  let y0=null, dy=0; const sc = sh.querySelector(".sheet-scroll");
+  sh.addEventListener("touchstart", e=>{ if(!mobile.matches) return; y0 = sc.scrollTop<=0 ? e.touches[0].clientY : null; dy=0; }, {passive:true});
+  sh.addEventListener("touchmove", e=>{ if(y0===null) return; dy = e.touches[0].clientY - y0;
+    if (dy>0){ sh.style.transition="none"; sh.style.transform=`translateY(${dy}px)`; } }, {passive:true});
+  sh.addEventListener("touchend", ()=>{ if(y0===null) return; sh.style.transition=""; sh.style.transform=""; if (dy>110) closeSheet(sh); y0=null; });
+});
+
+render();
+tick(); setInterval(tick, 1000);
+addEventListener("scroll", onScroll, {passive:true});
+onScroll(); setupReveal(); setupCarousel();
+</script>
+</body>
+</html>
