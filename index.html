@@ -66,8 +66,12 @@ a{color:inherit}
 
 /* price */
 .price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
-.price s{color:var(--ink-soft);font-size:14px;text-decoration-thickness:1px}
+.price s{color:var(--ink-soft);font-size:14px;text-decoration:line-through;text-decoration-thickness:1.5px;text-decoration-color:rgba(34,26,29,.55)}
 .price strong{font:500 20px/1 var(--sans);color:var(--ink)}
+.price strong.now{font-weight:600;color:var(--accent)}
+.price .off{align-self:center;font:600 10px/1 var(--sans);letter-spacing:.14em;color:#fff;background:var(--promo);padding:6px 9px;border-radius:999px;white-space:nowrap}
+.price{position:relative}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .tbc{font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px}
 .tag{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;background:var(--promo);color:#fff;font:600 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .tag-ghost{background:transparent;color:var(--promo);border:1px solid var(--promo)}
@@ -139,7 +143,7 @@ section{scroll-margin-top:96px}
 .card:hover .media > img,.card:active .media > img{transform:scale(1.045)}
 .card-name{font:400 18px/1.18 var(--serif);margin:0;text-wrap:balance}
 .card-cat{font:500 10px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
-.card .price strong{font-size:17px}
+.card .price strong{font-size:18px}
 .card .price s{font-size:13px}
 .card-info{display:grid;gap:5px}
 .card-size{font-size:13px;line-height:1.3;color:var(--ink-soft)}
@@ -559,12 +563,15 @@ footer small{color:var(--ink-soft)}
 <script>
 /* =====================================================================
    DREAM RENTAL CONTENT — edit this block to update the site.
-   price = rental price in pesos, exactly as shown on the Canva site.
+   price = regular rental price in pesos, exactly as shown on the Canva site.
+   During the sale window the promo price (price × 0.50) is shown automatically.
    price: null shows "Price to confirm" (used where Canva lists two prices).
    ===================================================================== */
 const CONFIG = {
   saleEnds:   "2026-10-01T23:59:59+08:00",   // Manila time
   saleStarts: "2026-09-29T00:00:00+08:00",
+  salePercent: 50,                           // promo price = regular price × 0.50
+  saleCats: ["evening","cocktail","floral","tops"], // categories included in the promo
   phone: "09912091390",
   facebook: "Dream Rental",                  // page name as shown on Facebook
   facebookUrl: "",                           // e.g. "https://www.facebook.com/yourpage"
@@ -637,8 +644,13 @@ const ITEMS = [
 
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
-const peso = n => "₱" + Math.round(n).toLocaleString("en-PH");
-const priceText = it => it.price == null ? "Price to confirm" : peso(it.price);
+const peso = n => "₱" + n.toLocaleString("en-PH", Number.isInteger(n) ? {} : {minimumFractionDigits:2, maximumFractionDigits:2});
+const saleOn = () => { const t = Date.now(); return t >= Date.parse(CONFIG.saleStarts) && t <= Date.parse(CONFIG.saleEnds); };
+const onSale = it => it.price != null && CONFIG.saleCats.includes(it.cat) && saleOn();
+const promo = it => Math.round(it.price * (100 - CONFIG.salePercent)) / 100;
+const payPrice = it => onSale(it) ? promo(it) : it.price;
+const offLabel = () => `${CONFIG.salePercent}% OFF`;
+const priceText = it => it.price == null ? "Price to confirm" : onSale(it) ? `${peso(promo(it))} (was ${peso(it.price)})` : peso(it.price);
 const byId = id => ITEMS.find(g => g.id === id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const catName = id => (CATEGORIES.find(c=>c.id===id)||{}).name || "";
@@ -650,10 +662,16 @@ const kind = it => ({evening:"Evening gown", cocktail:"Cocktail dress", floral:"
 function img(it, eager){
   return `<img src="${esc(it.img)}" alt="${esc(it.name)}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async" onload="this.classList.add('ok')">`;
 }
-function priceHTML(it){ return it.price == null ? `<span class="tbc">Price to confirm</span>` : `<strong>${peso(it.price)}</strong>`; }
+// pill: also show the "50% OFF" label inline (cards carry it on the photo instead)
+function priceHTML(it, pill){
+  if (it.price == null) return `<span class="tbc">Price to confirm</span>`;
+  if (!onSale(it)) return `<strong>${peso(it.price)}</strong>`;
+  return `<s><span class="sr">Regular price </span>${peso(it.price)}</s><strong class="now"><span class="sr">Promo price </span>${peso(promo(it))}</strong>${pill ? `<span class="off">${offLabel()}</span>` : ""}`;
+}
+const saleBadge = it => onSale(it) ? `<span class="badge tag">${offLabel()}</span>` : "";
 function cardHTML(it){
   return `<button class="card" data-item="${it.id}" aria-label="View ${esc(it.name)}, ${esc(kind(it))}, ${priceText(it)}">
-    <div class="media">${img(it)}</div>
+    <div class="media">${saleBadge(it)}${img(it)}</div>
     <div class="card-info">
       <span class="card-cat">${esc(kind(it))}</span>
       <h3 class="card-name">${esc(it.name)}</h3>
@@ -678,12 +696,12 @@ function render(){
   // featured
   const f = byId("look-27");
   $("#featuredSlot").innerHTML = `
-    <button class="media" data-item="${f.id}" aria-label="View ${esc(f.name)}" style="display:block">${img(f)}</button>
+    <button class="media" data-item="${f.id}" aria-label="View ${esc(f.name)}" style="display:block">${saleBadge(f)}${img(f)}</button>
     <div class="feat-body">
       <p class="eyebrow">The statement gown</p>
       <h2 class="name">${esc(f.name)}</h2>
       <p class="meta">${esc(kind(f))} · Fits ${esc(f.size)}</p>
-      <div class="price">${priceHTML(f)}</div>
+      <div class="price">${priceHTML(f, true)}</div>
       <button class="btn btn-line" data-item="${f.id}">View gown <span class="arrow" aria-hidden="true">→</span></button>
     </div>`;
 
@@ -693,7 +711,7 @@ function render(){
   // carousel
   $("#carousel").innerHTML = inCat("cocktail").map(cardHTML).join("");
 
-  $("#fromPrice").textContent = peso(Math.min(...inCat("evening").filter(i=>i.price!=null).map(i=>i.price)));
+  $("#fromPrice").textContent = peso(Math.min(...inCat("evening").filter(i=>i.price!=null).map(payPrice)));
   $("#trustList").innerHTML = CONFIG.trust.map(t=>`<li>${esc(t)}</li>`).join("");
 
   $("#chips").innerHTML = [{id:"all",short:"All"}, ...cats].map(c=>`<button class="chip" data-filter="${c.id}" aria-pressed="${c.id==="all"}">${esc(c.short)}</button>`).join("");
@@ -762,13 +780,13 @@ function closeAll(){ $$(".sheet.on").forEach(s=>closeSheet(s)); }
 function openQuick(id){
   const it = byId(id); if(!it) return; current = it;
   $("#qvPhoto").innerHTML = img(it, true) + `<span class="hint">Tap to enlarge</span>`;
-  $("#qvTags").innerHTML = "";
+  $("#qvTags").innerHTML = onSale(it) ? `<span class="tag tag-ghost">Sale ends Oct 1</span>` : "";
   $("#qvCat").textContent = catName(it.cat);
   $("#qvName").textContent = it.name;
-  $("#qvPrice").innerHTML = priceHTML(it);
+  $("#qvPrice").innerHTML = priceHTML(it, true);
   $("#qvFacts").innerHTML = [
     ["Fits", it.size],
-    ["Rental", it.price == null ? "Price to confirm with Dream Rental" : peso(it.price)],
+    ["Rental", it.price == null ? "Price to confirm with Dream Rental" : onSale(it) ? `${peso(promo(it))} promo price · regular ${peso(it.price)}` : peso(it.price)],
     ...(it.note ? [["Note", it.note]] : []),
     ["Availability", "Tell us your event date and we'll confirm"]
   ].map(r=>`<li><span>${r[0]}</span>${esc(r[1])}</li>`).join("");
@@ -791,7 +809,7 @@ function openReserve(id){
 function syncPicked(){
   const it = byId($("#rsItem").value);
   $("#rsPicked").hidden = !it; $("#rsItemField").hidden = !!it;
-  if (it) $("#rsPicked").innerHTML = `<div class="media">${img(it)}</div><div><b>${esc(it.name)}</b><div class="price" style="margin-top:6px">${priceHTML(it)}</div><button type="button" class="fine" id="rsChange" style="text-decoration:underline;margin-top:6px">Change outfit</button></div>`;
+  if (it) $("#rsPicked").innerHTML = `<div class="media">${img(it)}</div><div><b>${esc(it.name)}</b><div class="price" style="margin-top:6px">${priceHTML(it, true)}</div><button type="button" class="fine" id="rsChange" style="text-decoration:underline;margin-top:6px">Change outfit</button></div>`;
 }
 function submitReserve(e){
   e.preventDefault();
@@ -800,7 +818,7 @@ function submitReserve(e){
   if (missing.length){ const er=$("#rsError"); er.textContent = "Please add " + missing.join(", ") + "."; er.hidden=false; return; }
   const nice = new Date(date+"T00:00:00").toLocaleDateString("en-PH",{weekday:"short",month:"long",day:"numeric",year:"numeric"});
   const size = $("#rsSize").value.trim();
-  const msg = `Hi Dream Rental! I'd like to reserve this outfit.\n\nOutfit: ${it.name} (${kind(it)})\nFits: ${it.size}\nEvent date: ${nice}\nPrice: ${it.price == null ? "please confirm" : peso(it.price)}${size?"\nMy size: "+size:""}\nName: ${name}\n\nIs it available for my date?`;
+  const msg = `Hi Dream Rental! I'd like to reserve this outfit.\n\nOutfit: ${it.name} (${kind(it)})\nFits: ${it.size}\nEvent date: ${nice}\n${it.price == null ? "Price: please confirm" : onSale(it) ? `Promo price: ${peso(promo(it))} (${offLabel()}, regular ${peso(it.price)})` : "Price: " + peso(it.price)}${size?"\nMy size: "+size:""}\nName: ${name}\n\nIs it available for my date?`;
   $("#rsMsg").textContent = msg;
   $("#rsSms").href = `sms:${CONFIG.phone}?&body=${encodeURIComponent(msg)}`;
   const f = $("#rsForm2"); f.hidden = !it.form; if (it.form) f.href = it.form;
