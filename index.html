@@ -747,6 +747,7 @@ let current = null, lastFocus = null;
 function openSheet(el){
   if (!$(".sheet.on")) lastFocus = document.activeElement;
   $$(".sheet.on").forEach(s=>{ if(s!==el) closeSheet(s,true); });
+  clearTimeout(el._hideTimer);            // cancel a pending hide from a close just before
   el.hidden = false;
   requestAnimationFrame(()=>requestAnimationFrame(()=>{ el.classList.add("on"); $("#scrim").classList.add("on"); }));
   document.documentElement.classList.add("locked");
@@ -755,7 +756,8 @@ function openSheet(el){
 }
 function closeSheet(el, keepScrim){
   el.classList.remove("on");
-  setTimeout(()=>{ if(!el.classList.contains("on")) el.hidden = true; }, 500);
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(()=>{ if(!el.classList.contains("on")) el.hidden = true; }, 500);
   if (!keepScrim){
     $("#scrim").classList.remove("on");
     document.documentElement.classList.remove("locked");
